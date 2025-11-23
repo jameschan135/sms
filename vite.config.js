@@ -5,7 +5,9 @@ import tailwindcss from "tailwindcss"
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "/twilio-sms-web",
+  // Use base path from environment variable, default to "/" for Vercel
+  // Set VITE_BASE_PATH="/twilio-sms-web" for GitHub Pages
+  base: import.meta.env.VITE_BASE_PATH || "/",
   server: {
     port: 3000,
   },
