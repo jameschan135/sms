@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   // Use base path from environment variable, default to "/" for Vercel
   // Set VITE_BASE_PATH="/twilio-sms-web" for GitHub Pages
-  base: "/twilio-sms-web",
+  base: "/",
   server: {
     port: 3000,
   },
