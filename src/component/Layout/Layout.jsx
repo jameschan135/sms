@@ -1,5 +1,7 @@
-import { GithubOutlined, InboxOutlined, SendOutlined, FileTextFilled } from "@ant-design/icons"
+import { GithubOutlined, InboxOutlined, SendOutlined, FileTextFilled, UserOutlined, LogoutOutlined, SettingOutlined, FileTextOutlined, DashboardOutlined, NotificationOutlined } from "@ant-design/icons"
 import { useNavigate } from "react-router-dom"
+import { useUser } from "../../context/UserProvider"
+import { isAdmin } from "../../context/UserProvider"
 
 const termsAndConditionsUrl = import.meta.env.VITE_TERMS_AND_CONDITIONS_URL
 const githubUrl = import.meta.env.VITE_GITHUB_URL
@@ -15,6 +17,7 @@ const NavItem = ({ className, children, onClick = () => {} }) => (
 
 const NavBar = () => {
   const navigate = useNavigate()
+  const [user, setUser] = useUser()
 
   const navigateToInbox = () => {
     navigate("/inbox")
@@ -22,6 +25,27 @@ const NavBar = () => {
 
   const navigateToSend = () => {
     navigate("/send")
+  }
+
+  const navigateToMassSend = () => {
+    navigate("/mass-send")
+  }
+
+  const navigateToAdmin = () => {
+    navigate("/admin")
+  }
+
+  const navigateToTemplates = () => {
+    navigate("/templates")
+  }
+
+  const navigateToDashboard = () => {
+    navigate("/dashboard")
+  }
+
+  const handleLogout = () => {
+    setUser(null)
+    navigate("/login")
   }
 
   return (
@@ -36,8 +60,42 @@ const NavBar = () => {
             <SendOutlined className="text-lg" />
             <span className="mt-1">Send</span>
           </NavItem>
+          <NavItem onClick={navigateToMassSend}>
+            <NotificationOutlined className="text-lg" />
+            <span className="mt-1">Mass Send</span>
+          </NavItem>
+          <NavItem onClick={navigateToTemplates}>
+            <FileTextOutlined className="text-lg" />
+            <span className="mt-1">Templates</span>
+          </NavItem>
+          {user && (
+            <NavItem onClick={navigateToDashboard}>
+              <DashboardOutlined className="text-lg" />
+              <span className="mt-1">Dashboard</span>
+            </NavItem>
+          )}
+          {user && isAdmin(user) && (
+            <NavItem onClick={navigateToAdmin}>
+              <SettingOutlined className="text-lg" />
+              <span className="mt-1">Admin</span>
+            </NavItem>
+          )}
         </div>
         <div className="grow flex justify-center items-center text-lg">Twilio SMS Web</div>
+        <div className="flex items-center gap-2">
+          {user && (
+            <>
+              <span className="text-sm flex items-center gap-1">
+                <UserOutlined />
+                {user.name}
+              </span>
+              <NavItem onClick={handleLogout}>
+                <LogoutOutlined className="text-lg" />
+                <span className="mt-1">Đăng xuất</span>
+              </NavItem>
+            </>
+          )}
+        </div>
       </nav>
     </>
   )

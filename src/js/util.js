@@ -20,3 +20,15 @@ export const copyToClipboard = s =>
 
 // Starts with plus followed by at least 11 digits
 export const phonePattern = "^\\+\\d{11,}$"
+
+/**
+ * Checks if a value is empty (null, undefined, empty string, empty array, empty object)
+ * @param {any} value - The value to check
+ * @returns {boolean} - True if the value is empty, false otherwise
+ */
+export const isEmpty = value => {
+  if (value == null) return true
+  if (typeof value === "string" || Array.isArray(value)) return value.length === 0
+  if (typeof value === "object") return Object.keys(value).length === 0
+  return false
+}

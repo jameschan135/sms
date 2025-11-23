@@ -1,6 +1,5 @@
 import { InboxOutlined, SendOutlined } from "@ant-design/icons"
-import { fromNow } from "../../js/util"
-import { isEmpty } from "lodash"
+import { fromNow, isEmpty } from "../../js/util"
 import { MessageDirection } from "../../js/types"
 import { MediaViewer } from "../MediaViewer/MediaViewer"
 import { LoadingOutlined } from "@ant-design/icons"

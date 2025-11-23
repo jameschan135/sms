@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Authentication, getAuthentication, toCredentials } from "../context/AuthenticationProvider"
-import { isEmpty } from "lodash"
+import { isEmpty } from "./util"
 
 export const buildUrl = (accountSid = "", pageSize = 8, pageNumber = 0) =>
   `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/IncomingPhoneNumbers.json?Beta=false&PageSize=${pageSize}&Page=${pageNumber}`
@@ -38,7 +38,7 @@ export const buildUrl = (accountSid = "", pageSize = 8, pageNumber = 0) =>
  * @param {Array<string>} [accumulator]
  * @returns {Promise<Array<TwilioPhoneNumberResponse>>}
  */
-const getTwilioPhoneNumbersResursively = async (
+const getTwilioPhoneNumbersRecursively = async (
   authentication = new Authentication(),
   pageSize = 50,
   accumulator = [],
@@ -51,7 +51,7 @@ const getTwilioPhoneNumbersResursively = async (
   const nextPage = currentPage?.data?.next_page_uri
   const phoneNumbersLength = currentPage?.data?.incoming_phone_numbers?.length ?? 0
   if (nextPage && phoneNumbersLength > 0) {
-    return getTwilioPhoneNumbersResursively(authentication, pageSize, pages)
+    return getTwilioPhoneNumbersRecursively(authentication, pageSize, pages)
   }
 
   return pages
@@ -63,7 +63,7 @@ let cache = []
  */
 export const getTwilioPhoneNumbers = async () => {
   if (isEmpty(cache)) {
-    const response = await getTwilioPhoneNumbersResursively(getAuthentication())
+    const response = await getTwilioPhoneNumbersRecursively(getAuthentication())
     cache = response
       .flatMap(r => r?.data?.incoming_phone_numbers)
       .filter(pn => pn?.capabilities?.sms)
