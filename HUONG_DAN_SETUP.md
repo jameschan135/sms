@@ -286,8 +286,8 @@ CREATE POLICY "Allow delete user_phone_numbers" ON user_phone_numbers FOR DELETE
 
 1. Vào **Table Editor** > **users**
 2. Bạn sẽ thấy 2 users mặc định:
-   - `admin` / `admin123` (role: admin)
-   - `user1` / `user123` (role: user)
+   - `admin` / `*****` (role: admin)
+   - `user1` / `*****` (role: user)
 
 ---
 
