@@ -119,16 +119,16 @@ const Footer = () => (
 )
 
 export const Layout = ({ children }) => (
-  <div className="flex flex-col min-h-full bg-gray-200">
-    <div className="bg-violet-900 flex justify-center">
-      <span className="block h-14 w-full max-w-screen-lg">
+  <div className="flex flex-col h-full bg-gray-200">
+    <div className="bg-violet-900 flex justify-center flex-shrink-0">
+      <span className="block h-14 w-full">
         <NavBar />
       </span>
     </div>
-    <div className="grow flex justify-center">
-      <span className="block bg-gray-50 w-full max-w-screen-lg p-1 sm:p-4">{children}</span>
+    <div className="flex-1 flex justify-center overflow-hidden">
+      <span className="block bg-gray-50 w-full p-1 sm:p-4 overflow-hidden">{children}</span>
     </div>
-    <div className="bg-violet-900">
+    <div className="bg-violet-900 flex-shrink-0">
       <Footer />
     </div>
   </div>

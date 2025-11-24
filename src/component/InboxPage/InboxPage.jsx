@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Layout } from "../Layout/Layout"
-import { MessageRows } from "../MessageRows/MessageRows"
-import { allPhones, MessageFilterEnum, Selector } from "./Selector"
+import { allPhones, MessageFilterEnum } from "./Selector"
 import { getTwilioPhoneNumbers } from "../../js/getTwilioPhoneNumbers"
 import { getMessages } from "./getMessages"
 import { ErrorLabel } from "../ErrorLabel/ErrorLabel"
 import { useAuthentication } from "../../context/AuthenticationProvider"
 import { useUser } from "../../context/UserProvider"
 import { getUserPhoneNumber } from "../../js/userPhoneNumberService"
+import { ConversationList } from "./ConversationList"
+import { ConversationView } from "./ConversationView"
 
 export const InboxPage = () => {
   const navigate = useNavigate()
@@ -24,6 +25,7 @@ export const InboxPage = () => {
   const [loadingUserPhone, setLoadingUserPhone] = useState(true)
   const [messageFilter, setMessageFilter] = useState(MessageFilterEnum.all)
   const [error, setError] = useState(null)
+  const [selectedConversationId, setSelectedConversationId] = useState(null)
 
   // Load số điện thoại được assign cho user
   useEffect(() => {
@@ -50,23 +52,24 @@ export const InboxPage = () => {
     loadUserPhoneNumber()
   }, [user?.id])
 
-  useEffect(() => {
+  const loadMessages = async () => {
     if (!hasTwilioAuth || loadingUserPhone) return
 
-    const run = async () => {
-      setLoadingMessages(true)
-      try {
-        // Nếu user có phone number được assign, chỉ hiển thị messages của số đó
-        const phoneToUse = userPhoneNumber || phoneNumber
-        const ms = await getMessages(phoneToUse, messageFilter)
-        setMessages(ms)
-      } catch (e) {
-        setError(e)
-      } finally {
-        setLoadingMessages(false)
-      }
+    setLoadingMessages(true)
+    try {
+      // Nếu user có phone number được assign, chỉ hiển thị messages của số đó
+      const phoneToUse = userPhoneNumber || phoneNumber
+      const ms = await getMessages(phoneToUse, messageFilter)
+      setMessages(ms)
+    } catch (e) {
+      setError(e)
+    } finally {
+      setLoadingMessages(false)
     }
-    run()
+  }
+
+  useEffect(() => {
+    loadMessages()
   }, [phoneNumber, messageFilter, userPhoneNumber, hasTwilioAuth, loadingUserPhone])
 
   useEffect(() => {
@@ -116,37 +119,79 @@ export const InboxPage = () => {
     )
   }
 
-  // Nếu user có phone number được assign, ẩn selector và chỉ hiển thị messages của số đó
-  const showSelector = !userPhoneNumber
+  // Auto-select first conversation when messages load
+  useEffect(() => {
+    if (messages.length > 0 && !selectedConversationId && userPhoneNumber) {
+      // Get first conversation
+      const conversations = new Set()
+      messages.forEach(message => {
+        const otherParty = message.direction === "received" ? message.from : message.to
+        if (otherParty !== userPhoneNumber) {
+          conversations.add(otherParty)
+        }
+      })
+      if (conversations.size > 0) {
+        setSelectedConversationId(Array.from(conversations)[0])
+      }
+    }
+  }, [messages, selectedConversationId, userPhoneNumber])
 
   return (
     <Layout>
-      <h3>Inbox</h3>
-      {userPhoneNumber ? (
-        <p className="my-4">
-          Tin nhắn của số điện thoại <strong>{userPhoneNumber}</strong> được hiển thị ở đây, tin nhắn mới nhất ở trên cùng.
-        </p>
-      ) : (
-        <p className="my-4">Your messages are displayed on this page, with the most recent ones at the top.</p>
-      )}
-      {!userPhoneNumber && (
-        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
-          <p className="text-sm text-yellow-700">
-            Bạn chưa được phân bổ số điện thoại. Vui lòng liên hệ admin để được phân bổ số điện thoại.
-          </p>
+      <div className="h-full flex flex-col">
+        {/* Header */}
+        <div className="border-b border-gray-200 p-4 bg-white">
+          <h3 className="text-2xl font-bold">Inbox</h3>
+          {userPhoneNumber ? (
+            <p className="text-sm text-gray-600 mt-1">
+              Số điện thoại: <strong>{userPhoneNumber}</strong>
+            </p>
+          ) : (
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 mt-3">
+              <p className="text-sm text-yellow-700">
+                Bạn chưa được phân bổ số điện thoại. Vui lòng liên hệ admin để được phân bổ số điện thoại.
+              </p>
+            </div>
+          )}
         </div>
-      )}
-      <ErrorLabel error={error} className="mb-4" />
-      {showSelector && (
-        <Selector
-          phoneNumbers={phoneNumbers}
-          phoneNumber={phoneNumber}
-          loading={loadingPhones}
-          onMessageFilterChange={setMessageFilter}
-          onPhoneNumberChange={setPhoneNumber}
-        />
-      )}
-      <MessageRows loading={loadingMessages} messages={messages} />
+
+        <ErrorLabel error={error} className="mx-4 mt-4" />
+
+        {/* Main Content - 3 Column Layout */}
+        <div className="flex-1 flex overflow-hidden">
+          {/* Left Column - Conversation List */}
+          <div className="w-80 border-r border-gray-200 bg-white flex flex-col">
+            <div className="p-4 border-b border-gray-200">
+              <h4 className="font-semibold text-gray-900">Cuộc trò chuyện</h4>
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <ConversationList
+                messages={messages}
+                selectedConversationId={selectedConversationId}
+                onSelectConversation={setSelectedConversationId}
+                userPhoneNumber={userPhoneNumber}
+                loading={loadingMessages || loadingUserPhone}
+              />
+            </div>
+          </div>
+
+          {/* Middle Column - Conversation View */}
+          <div className="flex-1 flex flex-col bg-white">
+            <ConversationView
+              messages={messages}
+              conversationId={selectedConversationId}
+              userPhoneNumber={userPhoneNumber}
+              loading={loadingMessages || loadingUserPhone}
+              onMessageSent={loadMessages}
+            />
+          </div>
+
+          {/* Right Column - Placeholder (for future use) */}
+          <div className="w-80 border-l border-gray-200 bg-gray-50 flex items-center justify-center">
+            <p className="text-gray-500 text-sm">Khu vực này dành cho tính năng tương lai</p>
+          </div>
+        </div>
+      </div>
     </Layout>
   )
 }

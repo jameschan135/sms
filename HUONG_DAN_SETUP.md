@@ -417,6 +417,45 @@ VITE_GITHUB_URL=
    }
    ```
 
+**Lỗi cụ thể**: `If 'rewrites', 'redirects', 'headers', 'cleanUrls' or 'trailingSlash' are used, then 'routes' cannot be present.`
+
+**Nguyên nhân**: Trong `vercel.json` có cả `routes` và `rewrites` cùng lúc, điều này không được phép trong Vercel v2.
+
+**Giải pháp**:
+1. Mở file `vercel.json`
+2. Xóa phần `routes` (giữ lại `rewrites`)
+3. Đảm bảo `rewrites` có cấu hình cho SPA routing:
+   ```json
+   {
+     "version": 2,
+     "builds": [
+       {
+         "src": "package.json",
+         "use": "@vercel/static-build",
+         "config": {
+           "distDir": "dist"
+         }
+       },
+       {
+         "src": "api/**/*.js",
+         "use": "@vercel/node"
+       }
+     ],
+     "rewrites": [
+       {
+         "source": "/api/:path*",
+         "destination": "/api/:path*"
+       },
+       {
+         "source": "/(.*)",
+         "destination": "/index.html"
+       }
+     ]
+   }
+   ```
+4. Commit và push lại code lên GitHub
+5. Vercel sẽ tự động redeploy
+
 ### 7.2. Lỗi Kết Nối Supabase
 
 **Lỗi**: "Failed to fetch" hoặc CORS error
@@ -464,6 +503,97 @@ VITE_GITHUB_URL=
 2. Kiểm tra password đúng (mặc định: `admin123` cho admin)
 3. Kiểm tra console trong browser DevTools để xem lỗi chi tiết
 4. Kiểm tra kết nối Supabase hoạt động
+
+### 7.7. Trang Web Hiển Thị Trắng (Blank Page)
+
+**Lỗi**: Sau khi deploy lên Vercel, trang web chỉ hiển thị màn hình trắng, không có nội dung
+
+**Cách Kiểm Tra**:
+
+1. **Mở Browser DevTools**:
+   - Nhấn `F12` hoặc `Ctrl+Shift+I` (Windows) / `Cmd+Option+I` (Mac)
+   - Vào tab **Console** để xem lỗi JavaScript
+   - Vào tab **Network** để xem các file không load được
+
+2. **Kiểm Tra Vercel Logs**:
+   - Vào Vercel Dashboard > Chọn project
+   - Vào tab **Deployments** > Click vào deployment mới nhất
+   - Xem **Build Logs** và **Function Logs** để tìm lỗi
+
+3. **Kiểm Tra Các Lỗi Thường Gặp**:
+
+   **Lỗi 404 cho assets (JS/CSS files)**:
+   - Nguyên nhân: Base path trong `vite.config.js` không đúng
+   - Giải pháp: Xem bên dưới
+
+   **Lỗi "Failed to fetch" hoặc CORS**:
+   - Nguyên nhân: Environment variables chưa được cấu hình
+   - Giải pháp: Kiểm tra Vercel Environment Variables
+
+   **Lỗi "Cannot read property..." trong Console**:
+   - Nguyên nhân: Code JavaScript có lỗi
+   - Giải pháp: Xem chi tiết lỗi trong Console
+
+**Giải Pháp Cho Lỗi Base Path**:
+
+Nếu bạn thấy lỗi 404 cho các file `.js` hoặc `.css` trong Network tab, đây là do base path:
+
+1. **Kiểm tra `vite.config.js`**:
+   - Nếu có `base: "/twilio-sms-web"` → Đây là cho GitHub Pages
+   - Trên Vercel, cần đổi thành `base: "/"`
+
+2. **Sửa `vite.config.js`**:
+   ```javascript
+   export default defineConfig({
+     plugins: [react()],
+     base: "/", // Đổi từ "/twilio-sms-web" thành "/"
+     // ... rest of config
+   })
+   ```
+
+3. **Hoặc sử dụng Environment Variable** (đã được cập nhật trong code):
+   - File `vite.config.js` đã được cập nhật để tự động dùng `base: "/"` cho Vercel
+   - Nếu cần GitHub Pages, set `VITE_BASE_PATH="/twilio-sms-web"` trong environment variables
+
+4. **Redeploy**:
+   ```bash
+   git add vite.config.js
+   git commit -m "Fix base path for Vercel deployment"
+   git push
+   ```
+
+**Kiểm Tra Build Output**:
+
+1. Vào Vercel Dashboard > Deployments > Click vào deployment
+2. Xem **Build Logs**:
+   - ✅ Build thành công: "Build completed"
+   - ❌ Build failed: Xem lỗi chi tiết
+
+3. Kiểm tra **Output Directory**:
+   - Đảm bảo `distDir: "dist"` trong `vercel.json` khớp với output của Vite
+   - Vite mặc định build vào folder `dist`
+
+**Kiểm Tra Routing**:
+
+1. Thử truy cập trực tiếp: `https://your-project.vercel.app/index.html`
+2. Nếu load được → Vấn đề ở routing
+3. Kiểm tra `vercel.json` có rewrite rule:
+   ```json
+   {
+     "source": "/(.*)",
+     "destination": "/index.html"
+   }
+   ```
+
+**Debug Checklist**:
+
+- [ ] Mở Browser Console (F12) → Có lỗi gì không?
+- [ ] Mở Network tab → Có file nào bị 404 không?
+- [ ] Kiểm tra Vercel Build Logs → Build có thành công không?
+- [ ] Kiểm tra `vite.config.js` → Base path có đúng không?
+- [ ] Kiểm tra `vercel.json` → Rewrite rules có đúng không?
+- [ ] Thử hard refresh: `Ctrl+Shift+R` (Windows) / `Cmd+Shift+R` (Mac)
+- [ ] Thử truy cập ở chế độ ẩn danh (Incognito)
 
 ---
 
