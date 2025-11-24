@@ -24,17 +24,7 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
--- Create trigger to automatically update updated_at
 CREATE TRIGGER update_users_updated_at 
   BEFORE UPDATE ON users 
   FOR EACH ROW 
   EXECUTE FUNCTION update_updated_at_column();
-
--- Insert default users (optional - for initial setup)
--- Note: In production, passwords should be hashed using bcrypt or similar
-INSERT INTO users (username, password, role, name) 
-VALUES 
-  ('admin', 'admin123', 'admin', 'Administrator'),
-  ('user1', 'user123', 'user', 'User One')
-ON CONFLICT (username) DO NOTHING;
-

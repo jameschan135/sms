@@ -5,25 +5,8 @@
 const USERS_STORAGE_KEY = "twilio_sms_users"
 const CURRENT_USER_KEY = "twilio_sms_current_user"
 
-// Default users - sẽ được sử dụng nếu không load được từ file JSON
-const DEFAULT_USERS = [
-  {
-    id: "1",
-    username: "admin",
-    password: "admin123",
-    role: "admin",
-    name: "Administrator",
-    createdAt: "2024-01-01T00:00:00.000Z",
-  },
-  {
-    id: "2",
-    username: "user1",
-    password: "user123",
-    role: "user",
-    name: "User One",
-    createdAt: "2024-01-01T00:00:00.000Z",
-  },
-]
+// Default users intentionally empty to avoid shipping hardcoded credentials
+const DEFAULT_USERS = []
 
 /**
  * @typedef {Object} User

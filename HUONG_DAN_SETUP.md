@@ -360,9 +360,7 @@ VITE_GITHUB_URL=
 
 2. Mở browser: `http://localhost:3000`
 
-3. Test đăng nhập:
-   - Username: `admin`
-   - Password: `admin123`
+3. Test đăng nhập bằng tài khoản bạn đã tạo trong Supabase (không có user mặc định).
 
 4. Kiểm tra:
    - ✅ Đăng nhập thành công
@@ -374,9 +372,7 @@ VITE_GITHUB_URL=
 
 1. Truy cập URL Vercel: `https://your-project-name.vercel.app`
 
-2. Test đăng nhập:
-   - Username: `admin`
-   - Password: `admin123`
+2. Test đăng nhập bằng tài khoản thật trong Supabase (không có user mặc định).
 
 3. Kiểm tra:
    - ✅ Ứng dụng load được
@@ -500,7 +496,7 @@ VITE_GITHUB_URL=
 
 **Giải pháp**:
 1. Kiểm tra users đã được tạo trong Supabase (Table Editor)
-2. Kiểm tra password đúng (mặc định: `admin123` cho admin)
+2. Kiểm tra password đúng với tài khoản bạn đã tạo
 3. Kiểm tra console trong browser DevTools để xem lỗi chi tiết
 4. Kiểm tra kết nối Supabase hoạt động
 

@@ -59,19 +59,13 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
--- Create trigger
 CREATE TRIGGER update_users_updated_at 
   BEFORE UPDATE ON users 
   FOR EACH ROW 
   EXECUTE FUNCTION update_updated_at_column();
-
--- Insert default users
-INSERT INTO users (username, password, role, name) 
-VALUES 
-  ('admin', 'admin123', 'admin', 'Administrator'),
-  ('user1', 'user123', 'user', 'User One')
-ON CONFLICT (username) DO NOTHING;
 ```
+
+> Sau khi chạy migration, hãy tự tạo tài khoản admin/user trực tiếp trong Supabase để tránh lưu mật khẩu mặc định trong codebase.
 
 3. Click "Run" để thực thi SQL
 
@@ -171,9 +165,7 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 1. Chạy `npm install` để cài đặt dependencies
 2. Chạy `npm run dev`
-3. Đăng nhập với:
-   - Username: `admin`
-   - Password: `admin123`
+3. Đăng nhập bằng tài khoản mà bạn đã tạo trong Supabase (không có user mặc định).
 4. Kiểm tra Admin page để xem danh sách users từ Supabase
 
 ## Lưu Ý Bảo Mật
