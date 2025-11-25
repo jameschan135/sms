@@ -1,10 +1,7 @@
-import { GithubOutlined, InboxOutlined, SendOutlined, FileTextFilled, UserOutlined, LogoutOutlined, SettingOutlined, FileTextOutlined, DashboardOutlined, NotificationOutlined } from "@ant-design/icons"
+import { InboxOutlined, SendOutlined, UserOutlined, LogoutOutlined, SettingOutlined, FileTextOutlined, DashboardOutlined, NotificationOutlined } from "@ant-design/icons"
 import { useNavigate } from "react-router-dom"
 import { useUser } from "../../context/UserProvider"
 import { isAdmin } from "../../context/UserProvider"
-
-const termsAndConditionsUrl = import.meta.env.VITE_TERMS_AND_CONDITIONS_URL
-const githubUrl = import.meta.env.VITE_GITHUB_URL
 
 const NavItem = ({ className, children, onClick = () => {} }) => (
   <span
@@ -101,23 +98,6 @@ const NavBar = () => {
   )
 }
 
-const Footer = () => (
-  <div className="w-full py-2 text-white flex flex-col items-center text-xs gap-1">
-    <a href={githubUrl} className="text-white">
-      <span className="block">
-        <GithubOutlined />
-        <span className="mx-2">GitHub</span>
-      </span>
-    </a>
-    <span className="block">
-      <a href={termsAndConditionsUrl} className="text-white">
-        <FileTextFilled />
-        <span className="mx-2">Terms and Conditions</span>
-      </a>
-    </span>
-  </div>
-)
-
 export const Layout = ({ children }) => (
   <div className="flex flex-col h-full bg-gray-200">
     <div className="bg-violet-900 flex justify-center flex-shrink-0">
@@ -127,9 +107,6 @@ export const Layout = ({ children }) => (
     </div>
     <div className="flex-1 flex justify-center overflow-hidden">
       <span className="block bg-gray-50 w-full p-1 sm:p-4 overflow-hidden">{children}</span>
-    </div>
-    <div className="bg-violet-900 flex-shrink-0">
-      <Footer />
     </div>
   </div>
 )
@@ -143,9 +120,6 @@ export const LayoutWithoutNavBar = ({ children }) => (
       <div className="bg-gray-200 grow"></div>
       <div className="bg-gray-100 w-full max-w-screen-md pt-2 pb-4 px-4">{children}</div>
       <div className="bg-gray-200 grow"></div>
-    </div>
-    <div className="bg-violet-900">
-      <Footer />
     </div>
   </div>
 )
