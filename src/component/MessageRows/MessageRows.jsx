@@ -38,9 +38,9 @@ const messageBody = message =>
  */
 const MessageIcon = ({ message }) =>
   MessageDirection.received === message.direction ? (
-    <InboxOutlined className="block text-[1.2rem] text-purple-900 w-8" />
+    <InboxOutlined className="block text-[1.2rem] text-teal-600 w-8" />
   ) : (
-    <SendOutlined className="block text-[1rem] text-purple-900 w-8" />
+    <SendOutlined className="block text-[1rem] text-teal-600 w-8" />
   )
 
 /**
@@ -54,8 +54,8 @@ const MessageRow = (message, onClick) => {
       className={`flex
   ${isReadContent(message)}
   border-b-2 border-l-2 pr-1 min-h-32
-  hover:bg-purple-100 hover:cursor-pointer hover:border-l-purple-400
-  active:bg-purple-200`}
+  hover:bg-teal-50 hover:cursor-pointer hover:border-l-teal-400
+  active:bg-teal-100`}
     >
       <div className="flex items-center justify-center">
         <MessageIcon message={message} />
@@ -95,7 +95,7 @@ export const MessageRows = ({ loading = true, messages = [] }) => {
   if (loading)
     return (
       <div className="text-center mt-16">
-        <LoadingOutlined className="text-6xl text-purple-900" />
+        <LoadingOutlined className="text-6xl text-teal-600" />
       </div>
     )
 

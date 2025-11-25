@@ -446,10 +446,10 @@ export const SendPage = () => {
               // Nếu chỉ có 1 số (đã được assign), hiển thị dạng read-only
               <div className="border border-gray-300 rounded-md p-3 bg-gray-50">
                 <div className="flex items-center">
-                  <div className="w-5 h-5 rounded border-2 flex items-center justify-center mr-3 bg-violet-600 border-violet-600">
+                  <div className="w-5 h-5 rounded border-2 flex items-center justify-center mr-3 bg-teal-500 border-teal-500">
                     <CheckOutlined className="text-white text-xs" />
                   </div>
-                  <span className="text-sm font-semibold text-violet-900">
+                  <span className="text-sm font-semibold text-teal-700">
                     {phoneNumbers[0]}
                   </span>
                   <span className="ml-2 text-xs text-gray-500">(Số điện thoại được phân bổ cho bạn)</span>
@@ -466,20 +466,20 @@ export const SendPage = () => {
                       onClick={() => !sendingMessage && handleFromSelect(phone)}
                       className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
                         isSelected
-                          ? "bg-violet-100 border-2 border-violet-500"
+                          ? "bg-teal-50 border-2 border-teal-400"
                           : "hover:bg-gray-50 border-2 border-transparent"
                       } ${sendingMessage ? "opacity-50 cursor-not-allowed" : ""}`}
                     >
                       <div
                         className={`w-5 h-5 rounded border-2 flex items-center justify-center mr-3 ${
                           isSelected
-                            ? "bg-violet-600 border-violet-600"
+                            ? "bg-teal-500 border-teal-500"
                             : "border-gray-300 bg-white"
                         }`}
                       >
                         {isSelected && <CheckOutlined className="text-white text-xs" />}
                       </div>
-                      <span className={`text-sm ${isSelected ? "font-semibold text-violet-900" : "text-gray-700"}`}>
+                      <span className={`text-sm ${isSelected ? "font-semibold text-teal-700" : "text-gray-700"}`}>
                         {phone}
                       </span>
                     </div>
@@ -488,7 +488,7 @@ export const SendPage = () => {
               </div>
             )}
               {from && phoneNumbers.length > 1 && (
-                <p className="mt-2 text-sm text-violet-600">
+                <p className="mt-2 text-sm text-teal-600">
                   Đã chọn: <strong>{from}</strong>
                 </p>
               )}
@@ -503,7 +503,7 @@ export const SendPage = () => {
                   onChange={handleCountryCodeChange}
                   placeholder="+1"
                   disabled={sendingMessage}
-                  className="w-20 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-20 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   maxLength={4}
                 />
               </div>
@@ -514,7 +514,7 @@ export const SendPage = () => {
                   onChange={handlePhoneNumberChange}
                   placeholder="5105209170"
                   disabled={sendingMessage}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   maxLength={15}
                 />
               </div>
@@ -539,7 +539,7 @@ export const SendPage = () => {
                   placeholder="Paste thông tin khách hàng vào đây. Ví dụ:&#10;Rhonda Saunders&#10;(+1)9173613346&#10;1316 Noble Ave Apt 1b&#10;Bronx, New York"
                   disabled={sendingMessage}
                   rows="8"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-sm resize-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed text-sm resize-none"
                 />
                 <p className="mt-2 text-xs text-gray-600">
                   Hệ thống sẽ tự động nhận diện tên và số điện thoại từ dữ liệu paste và điền vào các ô tương ứng.
@@ -576,7 +576,7 @@ export const SendPage = () => {
 
           {/* Placeholder Fields - Only show if template is selected and not Others */}
           {selectedTemplateType && selectedTemplateType !== TEMPLATE_TYPES.OTHERS && currentTemplate && (
-            <div className="mb-4 bg-violet-50 p-4 rounded-lg border border-violet-200">
+            <div className="mb-4 bg-teal-50 p-4 rounded-lg border border-teal-200">
               <h4 className="text-sm font-semibold text-gray-700 mb-3">Thông tin đơn hàng:</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {Object.entries(PLACEHOLDER_MAPPINGS).map(([key, label]) => {
@@ -595,7 +595,7 @@ export const SendPage = () => {
                     onChange={e => handlePlaceholderChange(key, e.target.value)}
                     placeholder={`Nhập ${label.toLowerCase()}`}
                     disabled={sendingMessage}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
               )
@@ -628,7 +628,7 @@ export const SendPage = () => {
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">Nội dung tin nhắn:</label>
             <textarea
-              className="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500"
+              className="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               placeholder={
                 selectedTemplateType === TEMPLATE_TYPES.OTHERS
                   ? hint
@@ -653,7 +653,7 @@ export const SendPage = () => {
         <div className="flex-shrink-0 border-t border-gray-200 bg-white pt-4 pb-2 mt-4">
           <div className="flex justify-end">
             <button 
-              className="px-6 py-2 bg-violet-900 text-white rounded-md hover:bg-violet-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+              className="px-6 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
               onClick={handleSend} 
               disabled={!isValid()}
             >

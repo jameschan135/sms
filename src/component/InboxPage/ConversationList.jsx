@@ -80,7 +80,7 @@ export const ConversationList = ({
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <LoadingOutlined className="text-4xl text-purple-900" />
+        <LoadingOutlined className="text-4xl text-teal-600" />
       </div>
     )
   }
@@ -106,7 +106,7 @@ export const ConversationList = ({
             onClick={() => onSelectConversation(conversation.id)}
             className={`
               p-3 border-b border-gray-200 cursor-pointer transition-colors
-              ${isSelected ? "bg-purple-100 border-l-4 border-l-purple-600" : "hover:bg-gray-100 active:bg-gray-200"}
+              ${isSelected ? "bg-teal-50 border-l-4 border-l-teal-500" : "hover:bg-gray-100 active:bg-gray-200"}
             `}
           >
             <div className="flex items-start justify-between gap-2">
@@ -118,7 +118,7 @@ export const ConversationList = ({
                 <div className="flex items-center justify-between">
                   <p className="text-sm text-gray-600 truncate flex-1">{preview}</p>
                   {conversation.unreadCount > 0 && (
-                    <span className="ml-2 flex-shrink-0 bg-purple-600 text-white text-xs font-semibold rounded-full px-2 py-0.5 min-w-[20px] text-center">
+                    <span className="ml-2 flex-shrink-0 bg-teal-500 text-white text-xs font-semibold rounded-full px-2 py-0.5 min-w-[20px] text-center">
                       {conversation.unreadCount}
                     </span>
                   )}

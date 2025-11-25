@@ -50,7 +50,7 @@ export const MessagePage = () => {
       <ErrorLabel error={error} />
       <p className="my-4">More details for your message.</p>
       {loading && (
-        <p className="mt-10 text-purple-900 text-5xl text-center">
+        <p className="mt-10 text-teal-600 text-5xl text-center">
           <LoadingOutlined />
         </p>
       )}

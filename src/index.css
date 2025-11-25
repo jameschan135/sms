@@ -30,19 +30,19 @@ code {
 }
 
 button {
-  background-color: #6d28d9;
-  border: #4c1d95 solid 2px;
+  background-color: #14b8a6;
+  border: #0d9488 solid 2px;
   border-radius: 6px;
   padding: 8px 16px 8px 16px;
   color: white;
 }
 
 button:hover {
-  background-color: #8b5cf6;
+  background-color: #2dd4bf;
 }
 
 button:active {
-  background-color: #4c1d95;
+  background-color: #0d9488;
 }
 
 button:invalid {

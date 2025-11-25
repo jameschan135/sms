@@ -172,7 +172,7 @@ export const TemplatePage = () => {
     return (
       <Layout>
         <div className="flex items-center justify-center py-8">
-          <Loading3QuartersOutlined spin className="text-2xl text-violet-600" />
+          <Loading3QuartersOutlined spin className="text-2xl text-teal-500" />
           <span className="ml-2">Đang tải...</span>
         </div>
       </Layout>
@@ -204,7 +204,7 @@ export const TemplatePage = () => {
             </label>
             <button
               onClick={handleCreate}
-              className="bg-violet-600 text-white px-4 py-2 rounded-md hover:bg-violet-700 flex items-center gap-2"
+              className="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 flex items-center gap-2"
             >
               <PlusOutlined />
               Tạo Template Mới
@@ -229,7 +229,7 @@ export const TemplatePage = () => {
                   value={formType}
                   onChange={e => setFormType(e.target.value)}
                   disabled={!!editingTemplate}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 disabled:opacity-50"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50"
                 >
                   {Object.values(TEMPLATE_TYPES).map(type => (
                     <option key={type} value={type}>
@@ -253,7 +253,7 @@ export const TemplatePage = () => {
                   value={formName}
                   onChange={e => setFormName(e.target.value)}
                   placeholder="Ví dụ: Template giao hàng"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
 
@@ -266,13 +266,13 @@ export const TemplatePage = () => {
                   onChange={e => setFormContent(e.target.value)}
                   placeholder='Ví dụ: Hi {cusname}, we are {shopname} on Tiktok. You have order {orderid} for {productname}, shipment date is {date}.'
                   rows="5"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
                 <p className="mt-1 text-xs text-gray-500">
                   Sử dụng {"{"}placeholder{"}"} để tạo biến, ví dụ: {"{"}cusname{"}"}, {"{"}shopname{"}"}, {"{"}orderid{"}"}, {"{"}productname{"}"}, {"{"}date{"}"}
                 </p>
                 {formContent && getPlaceholdersPreview(formContent) && (
-                  <p className="mt-2 text-sm text-violet-600">
+                  <p className="mt-2 text-sm text-teal-600">
                     Placeholders tìm thấy: <strong>{getPlaceholdersPreview(formContent)}</strong>
                   </p>
                 )}
@@ -281,7 +281,7 @@ export const TemplatePage = () => {
               <div className="flex gap-2">
                 <button
                   type="submit"
-                  className="bg-violet-600 text-white px-4 py-2 rounded-md hover:bg-violet-700"
+                  className="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600"
                 >
                   {editingTemplate ? "Cập nhật" : "Tạo"}
                 </button>
@@ -316,7 +316,7 @@ export const TemplatePage = () => {
                   <div
                     key={type}
                     className={`bg-white p-4 rounded-lg shadow-md border-2 ${
-                      template ? "border-violet-200" : "border-gray-200 border-dashed"
+                      template ? "border-teal-200" : "border-gray-200 border-dashed"
                     }`}
                   >
                     <div className="flex justify-between items-start mb-2">
@@ -325,7 +325,7 @@ export const TemplatePage = () => {
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleEdit(template)}
-                            className="text-violet-600 hover:text-violet-800"
+                            className="text-teal-600 hover:text-teal-700"
                             title="Chỉnh sửa"
                           >
                             <EditOutlined />
@@ -352,7 +352,7 @@ export const TemplatePage = () => {
                           {template.content}
                         </p>
                         {getPlaceholdersPreview(template.content) && (
-                          <p className="mt-2 text-xs text-violet-600">
+                          <p className="mt-2 text-xs text-teal-600">
                             Placeholders: {getPlaceholdersPreview(template.content)}
                           </p>
                         )}

@@ -26,6 +26,7 @@ export const InboxPage = () => {
   const [messageFilter, setMessageFilter] = useState(MessageFilterEnum.all)
   const [error, setError] = useState(null)
   const [selectedConversationId, setSelectedConversationId] = useState(null)
+  const [activeTab, setActiveTab] = useState("all") // "all" or "unread"
 
   // Load số điện thoại được assign cho user
   useEffect(() => {
@@ -107,7 +108,7 @@ export const InboxPage = () => {
                 </p>
                 <button
                   onClick={() => navigate("/authentication")}
-                  className="bg-violet-900 text-white px-4 py-2 rounded-md hover:bg-violet-800"
+                  className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-500"
                 >
                   Cấu hình Twilio ngay
                 </button>
@@ -161,17 +162,51 @@ export const InboxPage = () => {
         <div className="flex-1 flex overflow-hidden">
           {/* Left Column - Conversation List */}
           <div className="w-80 border-r border-gray-200 bg-white flex flex-col">
-            <div className="p-4 border-b border-gray-200">
-              <h4 className="font-semibold text-gray-900">Cuộc trò chuyện</h4>
+            {/* Tabs */}
+            <div className="border-b border-gray-200">
+              <div className="flex">
+                <button
+                  onClick={() => setActiveTab("all")}
+                  className={`flex-1 px-4 py-3 text-sm font-medium transition-colors relative ${
+                    activeTab === "all"
+                      ? "text-teal-600"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  All
+                  {activeTab === "all" && (
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-600"></span>
+                  )}
+                </button>
+                <button
+                  onClick={() => setActiveTab("unread")}
+                  className={`flex-1 px-4 py-3 text-sm font-medium transition-colors relative ${
+                    activeTab === "unread"
+                      ? "text-teal-600"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  Unread
+                  {activeTab === "unread" && (
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-600"></span>
+                  )}
+                </button>
+              </div>
             </div>
             <div className="flex-1 overflow-hidden">
-              <ConversationList
-                messages={messages}
-                selectedConversationId={selectedConversationId}
-                onSelectConversation={setSelectedConversationId}
-                userPhoneNumber={userPhoneNumber}
-                loading={loadingMessages || loadingUserPhone}
-              />
+              {activeTab === "all" ? (
+                <ConversationList
+                  messages={messages}
+                  selectedConversationId={selectedConversationId}
+                  onSelectConversation={setSelectedConversationId}
+                  userPhoneNumber={userPhoneNumber}
+                  loading={loadingMessages || loadingUserPhone}
+                />
+              ) : (
+                <div className="flex items-center justify-center h-full text-gray-500">
+                  <p>Không có tin nhắn chưa đọc</p>
+                </div>
+              )}
             </div>
           </div>
 

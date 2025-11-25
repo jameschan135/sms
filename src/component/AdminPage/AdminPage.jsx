@@ -219,7 +219,7 @@ export const AdminPage = () => {
       <div className="mb-4 flex gap-2">
         <button
           onClick={() => setShowAddForm(!showAddForm)}
-          className="bg-violet-900 text-white px-4 py-2 rounded-md hover:bg-violet-800 flex items-center gap-2"
+          className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-500 flex items-center gap-2"
         >
           <PlusOutlined />
           {showAddForm ? "Ẩn Form" : "Thêm Thành Viên"}
@@ -252,7 +252,7 @@ export const AdminPage = () => {
                 value={newUser.username}
                 onChange={e => setNewUser({ ...newUser, username: e.target.value })}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
                 placeholder="username"
               />
             </div>
@@ -263,7 +263,7 @@ export const AdminPage = () => {
                 value={newUser.password}
                 onChange={e => setNewUser({ ...newUser, password: e.target.value })}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
                 placeholder="password"
               />
             </div>
@@ -274,7 +274,7 @@ export const AdminPage = () => {
                 value={newUser.name}
                 onChange={e => setNewUser({ ...newUser, name: e.target.value })}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
                 placeholder="Tên hiển thị"
               />
             </div>
@@ -283,7 +283,7 @@ export const AdminPage = () => {
               <select
                 value={newUser.role}
                 onChange={e => setNewUser({ ...newUser, role: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
@@ -292,7 +292,7 @@ export const AdminPage = () => {
             <div className="flex gap-2">
               <button
                 type="submit"
-                className="bg-violet-900 text-white px-4 py-2 rounded-md hover:bg-violet-800"
+                className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-500"
               >
                 Thêm
               </button>
@@ -352,7 +352,7 @@ export const AdminPage = () => {
                         <span
                           className={`px-2 py-1 rounded-full text-xs font-semibold ${
                             user.role === "admin"
-                              ? "bg-purple-100 text-purple-800"
+                              ? "bg-teal-50 text-teal-800"
                               : "bg-blue-100 text-blue-800"
                           }`}
                         >
@@ -370,7 +370,7 @@ export const AdminPage = () => {
                               value={assignedPhone || ""}
                               onChange={(e) => handleAssignPhoneNumber(user.id, e.target.value)}
                               disabled={isAssigning}
-                              className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-violet-500 disabled:opacity-50"
+                              className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50"
                             >
                               <option value="">-- Chưa phân bổ --</option>
                               {phoneNumbers.map(phone => {

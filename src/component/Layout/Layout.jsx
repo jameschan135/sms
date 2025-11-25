@@ -6,7 +6,7 @@ import { isAdmin } from "../../context/UserProvider"
 const NavItem = ({ className, children, onClick = () => {} }) => (
   <span
     onClick={onClick}
-    className={`h-14 flex flex-col justify-center items-center px-4 hover:bg-violet-700 hover:cursor-pointer ${className}`}
+    className={`h-14 flex flex-col justify-center items-center px-4 hover:bg-teal-600 hover:cursor-pointer ${className}`}
   >
     {children}
   </span>
@@ -100,7 +100,7 @@ const NavBar = () => {
 
 export const Layout = ({ children }) => (
   <div className="flex flex-col h-full bg-gray-200">
-    <div className="bg-violet-900 flex justify-center flex-shrink-0">
+    <div className="bg-teal-600 flex justify-center flex-shrink-0">
       <span className="block h-14 w-full">
         <NavBar />
       </span>
@@ -114,7 +114,7 @@ export const Layout = ({ children }) => (
 export const LayoutWithoutNavBar = ({ children }) => (
   <div className="flex flex-col h-full">
     <div className="flex h-14">
-      <div className="bg-violet-900 grow flex justify-center items-center text-lg text-white">Twilio SMS Web</div>
+      <div className="bg-teal-600 grow flex justify-center items-center text-lg text-white">Twilio SMS Web</div>
     </div>
     <div className="flex grow">
       <div className="bg-gray-200 grow"></div>

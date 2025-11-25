@@ -74,10 +74,10 @@ export const DashboardPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
           <div
             onClick={() => navigate("/inbox")}
-            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-violet-500"
+            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-teal-400"
           >
             <div className="flex items-center mb-4">
-              <InboxOutlined className="text-3xl text-violet-600 mr-3" />
+              <InboxOutlined className="text-3xl text-teal-500 mr-3" />
               <h3 className="text-xl font-semibold">Inbox</h3>
             </div>
             <p className="text-gray-600">Xem tin nhắn đã nhận và đã gửi</p>
@@ -90,10 +90,10 @@ export const DashboardPage = () => {
 
           <div
             onClick={() => navigate("/send")}
-            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-violet-500"
+            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-teal-400"
           >
             <div className="flex items-center mb-4">
-              <SendOutlined className="text-3xl text-violet-600 mr-3" />
+              <SendOutlined className="text-3xl text-teal-500 mr-3" />
               <h3 className="text-xl font-semibold">Gửi SMS</h3>
             </div>
             <p className="text-gray-600">Gửi tin nhắn SMS mới</p>
@@ -106,10 +106,10 @@ export const DashboardPage = () => {
 
           <div
             onClick={() => navigate("/templates")}
-            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-violet-500"
+            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-teal-400"
           >
             <div className="flex items-center mb-4">
-              <FileTextOutlined className="text-3xl text-violet-600 mr-3" />
+              <FileTextOutlined className="text-3xl text-teal-500 mr-3" />
               <h3 className="text-xl font-semibold">Templates</h3>
             </div>
             <p className="text-gray-600">Quản lý message templates</p>
@@ -118,10 +118,10 @@ export const DashboardPage = () => {
           {user && isAdmin(user) && (
             <div
               onClick={() => navigate("/admin")}
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-violet-500"
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-teal-400"
             >
               <div className="flex items-center mb-4">
-                <SettingOutlined className="text-3xl text-violet-600 mr-3" />
+                <SettingOutlined className="text-3xl text-teal-500 mr-3" />
                 <h3 className="text-xl font-semibold">Quản trị</h3>
               </div>
               <p className="text-gray-600">Quản lý thành viên hệ thống</p>
@@ -132,7 +132,7 @@ export const DashboardPage = () => {
         {hasTwilioAuth && (
           <>
             {/* Balance Card */}
-            <div className="mt-8 bg-gradient-to-r from-violet-500 to-purple-600 rounded-lg shadow-lg p-6 text-white">
+            <div className="mt-8 bg-gradient-to-r from-teal-400 to-teal-500 rounded-lg shadow-lg p-6 text-white">
               <div className="flex items-center justify-between">
                 <div>
                   <div className="flex items-center mb-2">

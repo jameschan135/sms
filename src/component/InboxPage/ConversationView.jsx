@@ -182,7 +182,7 @@ export const ConversationView = ({
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <LoadingOutlined className="text-4xl text-purple-900" />
+        <LoadingOutlined className="text-4xl text-teal-600" />
       </div>
     )
   }
@@ -221,14 +221,14 @@ export const ConversationView = ({
                 onChange={(e) => setMessageText(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Nhập tin nhắn... (Enter để gửi, Shift+Enter để xuống dòng)"
-                className="flex-1 border border-gray-300 rounded-lg px-4 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="flex-1 border border-gray-300 rounded-lg px-4 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 rows={3}
                 disabled={sending || !userPhoneNumber}
               />
               <button
                 type="submit"
                 disabled={!messageText.trim() || sending || !userPhoneNumber}
-                className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2 self-end"
+                className="px-6 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2 self-end"
               >
                 {sending ? (
                   <>
@@ -274,7 +274,7 @@ export const ConversationView = ({
                 <div
                   className={`
                     max-w-[75%] rounded-2xl px-4 py-2 shadow-sm
-                    ${isSent ? "bg-purple-600 text-white rounded-tr-sm" : "bg-white text-gray-900 rounded-tl-sm"}
+                    ${isSent ? "bg-teal-500 text-white rounded-tr-sm" : "bg-white text-gray-900 rounded-tl-sm"}
                   `}
                 >
                   <div className="flex items-start gap-2">
@@ -282,7 +282,7 @@ export const ConversationView = ({
                       <InboxOutlined className="text-xs mt-0.5 flex-shrink-0 text-gray-400" />
                     )}
                     {isSent && (
-                      <SendOutlined className="text-xs mt-0.5 flex-shrink-0 text-purple-200" />
+                      <SendOutlined className="text-xs mt-0.5 flex-shrink-0 text-teal-100" />
                     )}
                     <div className="flex-1 min-w-0">
                       <p className="text-sm whitespace-pre-wrap break-words leading-relaxed">
@@ -293,7 +293,7 @@ export const ConversationView = ({
                           <MediaViewer messageSid={message.messageSid} thumbnail="false" />
                         </div>
                       )}
-                      <div className={`flex items-center gap-2 mt-1.5 flex-wrap ${isSent ? "text-purple-100" : "text-gray-400"}`}>
+                      <div className={`flex items-center gap-2 mt-1.5 flex-wrap ${isSent ? "text-teal-50" : "text-gray-400"}`}>
                         <p className="text-xs">
                           {fromNow(message.date)}
                         </p>
@@ -338,14 +338,14 @@ export const ConversationView = ({
                 onChange={(e) => setMessageText(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Nhập tin nhắn... (Enter để gửi, Shift+Enter để xuống dòng)"
-                className="flex-1 border border-gray-300 rounded-lg px-4 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="flex-1 border border-gray-300 rounded-lg px-4 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 rows={3}
                 disabled={sending || !userPhoneNumber}
               />
               <button
                 type="submit"
                 disabled={!messageText.trim() || sending || !userPhoneNumber}
-                className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2 self-end"
+                className="px-6 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2 self-end"
               >
                 {sending ? (
                   <>
