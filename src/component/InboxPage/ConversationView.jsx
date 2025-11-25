@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { MessageDirection } from "../../js/types"
 import { fromNow } from "../../js/util"
 import { MediaViewer } from "../MediaViewer/MediaViewer"
-import { LoadingOutlined } from "@ant-design/icons"
+import { LoadingOutlined, CheckCircleOutlined, CloseCircleOutlined, ClockCircleOutlined, ExclamationCircleOutlined } from "@ant-design/icons"
 import { InboxOutlined, SendOutlined } from "@ant-design/icons"
 import { sendTwilioMessage } from "../../js/sendTwilioMessage"
 import { useAuthentication } from "../../context/AuthenticationProvider"
@@ -12,6 +12,62 @@ import { ErrorLabel } from "../ErrorLabel/ErrorLabel"
 /**
  * @typedef {import("../../js/types").Message} Message
  */
+
+/**
+ * Get status display info (text, color, icon)
+ * @param {string} status - Message status from Twilio
+ * @returns {Object} Status display info
+ */
+const getStatusDisplay = (status) => {
+  const statusLower = (status || "").toLowerCase()
+  
+  switch (statusLower) {
+    case "delivered":
+      return {
+        text: "Đã gửi",
+        color: "text-green-500",
+        bgColor: "bg-green-50",
+        icon: <CheckCircleOutlined className="text-green-500" />
+      }
+    case "sent":
+      return {
+        text: "Đã gửi",
+        color: "text-blue-500",
+        bgColor: "bg-blue-50",
+        icon: <ClockCircleOutlined className="text-blue-500" />
+      }
+    case "queued":
+      return {
+        text: "Đang chờ",
+        color: "text-yellow-500",
+        bgColor: "bg-yellow-50",
+        icon: <ClockCircleOutlined className="text-yellow-500" />
+      }
+    case "failed":
+    case "undelivered":
+      return {
+        text: "Gửi thất bại",
+        color: "text-red-500",
+        bgColor: "bg-red-50",
+        icon: <CloseCircleOutlined className="text-red-500" />
+      }
+    case "receiving":
+    case "received":
+      return {
+        text: "Đang nhận",
+        color: "text-blue-500",
+        bgColor: "bg-blue-50",
+        icon: <ClockCircleOutlined className="text-blue-500" />
+      }
+    default:
+      return {
+        text: status || "Không xác định",
+        color: "text-gray-500",
+        bgColor: "bg-gray-50",
+        icon: <ExclamationCircleOutlined className="text-gray-500" />
+      }
+  }
+}
 
 /**
  * Filter messages for a specific conversation
@@ -237,9 +293,25 @@ export const ConversationView = ({
                           <MediaViewer messageSid={message.messageSid} thumbnail="false" />
                         </div>
                       )}
-                      <p className={`text-xs mt-1.5 ${isSent ? "text-purple-100" : "text-gray-400"}`}>
-                        {fromNow(message.date)}
-                      </p>
+                      <div className={`flex items-center gap-2 mt-1.5 flex-wrap ${isSent ? "text-purple-100" : "text-gray-400"}`}>
+                        <p className="text-xs">
+                          {fromNow(message.date)}
+                        </p>
+                        {/* Show status for sent messages only */}
+                        {isSent && message.status && (
+                          <span 
+                            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
+                              isSent 
+                                ? "bg-white/20 text-white border border-white/30" 
+                                : `${getStatusDisplay(message.status).bgColor} ${getStatusDisplay(message.status).color}`
+                            }`}
+                            title={`Trạng thái: ${message.status}`}
+                          >
+                            {getStatusDisplay(message.status).icon}
+                            <span>{getStatusDisplay(message.status).text}</span>
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
