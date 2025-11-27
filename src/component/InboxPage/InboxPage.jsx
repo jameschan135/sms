@@ -194,19 +194,16 @@ export const InboxPage = () => {
               </div>
             </div>
             <div className="flex-1 overflow-hidden">
-              {activeTab === "all" ? (
-                <ConversationList
-                  messages={messages}
-                  selectedConversationId={selectedConversationId}
-                  onSelectConversation={setSelectedConversationId}
-                  userPhoneNumber={userPhoneNumber}
-                  loading={loadingMessages || loadingUserPhone}
-                />
-              ) : (
-                <div className="flex items-center justify-center h-full text-gray-500">
-                  <p>Không có tin nhắn chưa đọc</p>
-                </div>
-              )}
+              <ConversationList
+                messages={messages}
+                selectedConversationId={selectedConversationId}
+                onSelectConversation={setSelectedConversationId}
+                userPhoneNumber={userPhoneNumber}
+                loading={loadingMessages || loadingUserPhone}
+                userId={user?.id}
+                filter={activeTab}
+                onConversationRead={loadMessages}
+              />
             </div>
           </div>
 

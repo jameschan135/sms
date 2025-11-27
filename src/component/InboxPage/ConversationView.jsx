@@ -6,6 +6,8 @@ import { LoadingOutlined, CheckCircleOutlined, CloseCircleOutlined, ClockCircleO
 import { InboxOutlined, SendOutlined } from "@ant-design/icons"
 import { sendTwilioMessage } from "../../js/sendTwilioMessage"
 import { useAuthentication } from "../../context/AuthenticationProvider"
+import { useUser } from "../../context/UserProvider"
+import { markConversationAsRead } from "../../js/conversationService"
 import { SuccessLabel } from "../SuccessLabel/SuccessLabel"
 import { ErrorLabel } from "../ErrorLabel/ErrorLabel"
 
@@ -120,8 +122,38 @@ export const ConversationView = ({
   const [sendError, setSendError] = useState(null)
   const [sendSuccess, setSendSuccess] = useState(false)
   const [authentication] = useAuthentication()
+  const [user] = useUser()
 
   const conversationMessages = getConversationMessages(messages, conversationId, userPhoneNumber)
+
+  // Mark conversation as read when it's opened
+  useEffect(() => {
+    if (conversationId && user?.id && userPhoneNumber) {
+      // Check if there are any received messages in this conversation
+      const hasReceivedMessages = conversationMessages.some(
+        msg => msg.direction === MessageDirection.received
+      )
+      
+      if (hasReceivedMessages) {
+        markConversationAsRead(user.id, conversationId)
+          .then(() => {
+            console.log('Conversation marked as read:', conversationId)
+            // Reload messages to update unread status after a short delay
+            if (onMessageSent) {
+              setTimeout(() => {
+                onMessageSent()
+              }, 500)
+            }
+          })
+          .catch(err => {
+            console.error('Error marking conversation as read:', err)
+            // Don't show error to user, just log it
+          })
+      }
+    }
+    // Only run when conversationId changes (when user opens a conversation)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [conversationId, user?.id, userPhoneNumber])
 
   // Auto scroll to bottom when new messages arrive
   useEffect(() => {
